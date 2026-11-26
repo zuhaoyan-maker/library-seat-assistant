@@ -1,0 +1,20 @@
+[Unit]
+Description=自习室座位助手
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=seat
+WorkingDirectory=/opt/seat-assistant
+# --source none：服务器上没有摄像头，用上传的视频
+# 接真摄像头时改成 --source 0 或 RTSP 地址
+ExecStart=/usr/bin/python3 run.py --source none --host 0.0.0.0 --port 8000 --admin-token 换成你的随机串
+Restart=always
+RestartSec=3
+# 日志走 journald，用 journalctl -u seat-assistant -f 查看
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,13 @@
+# 核心依赖：只需要 OpenCV，其余全部用标准库
+opencv-python>=4.8
+numpy>=1.24
+
+# 可选：切换到 --mode yolo 时才需要
+#
+#   pip install ultralytics
+#
+# 注意：torch 目前没有 Python 3.14 的轮子。要用 yolo 模式请在 3.11 / 3.12 的
+# 虚拟环境里安装：
+#
+#   python3.12 -m venv .venv && source .venv/bin/activate
+#   pip install -r requirements.txt ultralytics

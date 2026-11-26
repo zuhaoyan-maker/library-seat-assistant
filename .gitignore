@@ -1,0 +1,8 @@
+# 运行期数据：座位图、历史、空镜，都带现场信息，不要入库
+data/*
+!data/.gitkeep
+
+__pycache__/
+*.py[cod]
+.venv/
+.DS_Store

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>标定 · 座位助手</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <div>
+      <h1>座位标定</h1>
+      <p>在画面上框出每个座位，点「完成」闭合 · <span id="res">—</span></p>
+    </div>
+  </div>
+  <a class="badge" href="/">返回首页</a>
+</header>
+
+<div class="alert" id="hint">
+  步骤：① 让房间空着，点「拍空镜」 ② 逐个座位点 4 个角 ③ 保存。
+  画框要包含<b>椅面和桌子前缘</b>，这是有人时变化最大的区域。
+</div>
+
+<div class="cal-wrap">
+  <div class="card">
+    <h2>用一段录像先试（不必等相机到货）</h2>
+    <p class="muted small" style="margin:0 0 10px">
+      选一段自习室录像，程序会用<b>第一帧</b>当空镜并循环播放。
+      录制时请在开头留 10 秒空房间，否则第一帧里坐着的人会被当成"背景"。
+      上传后需要重新画一次座位框。
+    </p>
+    <div class="cal-bar">
+      <input type="file" id="videoFile" accept="video/*" class="tag" style="padding:6px 8px">
+      <button class="btn ok" id="btnUpload">上传并分析</button>
+      <span class="muted small" id="upStatus"></span>
+    </div>
+  </div>
+
+  <div class="cal-bar">
+    <button class="btn" id="btnShot">拍空镜</button>
+    <button class="btn" id="btnReload">刷新画面</button>
+    <button class="btn" id="btnFinish">完成当前座位</button>
+    <button class="btn" id="btnUndo">撤销一点</button>
+    <button class="btn" id="btnClearAll">清空全部</button>
+    <button class="btn ok" id="btnSave">保存</button>
+  </div>
+
+  <div class="stage" id="stage">
+    <canvas id="cv"></canvas>
+    <div class="msg" id="msg">
+      <b>还没有画面</b><br>
+      打开本页不会自动调用摄像头。<br>
+      上传一段录像，或点上方「刷新画面」获取实时画面。
+    </div>
+  </div>
+
+  <div class="card" id="layoutCard">
+    <h2>房间设置</h2>
+    <div class="cal-bar">
+      <label class="tag">房间名 <input id="room" value="自习室" size="8"></label>
+      <label class="tag">每行座位数 <input id="cols" type="number" value="5" min="1" max="12" style="width:52px"></label>
+      <label class="tag">过道在第几列后 <input id="aisle" type="number" value="2" min="0" max="11" style="width:52px"></label>
+    </div>
+    <p class="muted small" style="margin-top:8px">这两个数字只影响首页网格的画法，不影响识别。</p>
+  </div>
+
+  <div class="card">
+    <h2>已标定座位 <span class="muted small" id="count">0</span></h2>
+    <div class="seat-list" id="list"></div>
+  </div>
+
+  <div class="card">
+    <h2>实时判分（调阈值用）</h2>
+    <div class="scores" id="scores"><span class="muted small">—</span></div>
+    <p class="muted small" style="margin-top:8px">
+      数值 = 该座位框内"与空镜不同的像素占比"。人坐着通常 &gt; 0.3，放了书包大约 0.1–0.25，空着接近 0。
+    </p>
+  </div>
+</div>
+
+<script src="/calibrate.js"></script>
+</body>
+</html>
